@@ -69,12 +69,6 @@ RUN set -x \
     && rename 's/_/\-/g' *.dll \
     && cp "$W_TMP"/*.dll "$W_SYSTEM_DLLS"/
 
-RUN set -x \
-    && rm -f "$W_TMP"/* \
-    && wget -P "$W_TMP" https://aka.ms/vs/16/release/vs_buildtools.exe \
-    && wine "$W_TMP/vs_buildtools.exe" --quiet --wait --norestart --nocache -all --installPath "$W_TMP" \
-    && wine ""$W_TMP"\Common7\Tools\VsDevCmd.bat"
-
 
 # install pyinstaller
 RUN /usr/bin/pip install pyinstaller==$PYINSTALLER_VERSION
