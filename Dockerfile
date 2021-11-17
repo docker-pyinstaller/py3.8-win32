@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -10,9 +10,10 @@ ARG PYINSTALLER_VERSION=3.6
 RUN set -x \
     && dpkg --add-architecture i386 \
     && apt-get update -qy \
-    && apt-get install --no-install-recommends -qfy apt-transport-https software-properties-common wget file\
-    && wget -nv https://dl.winehq.org/wine-builds/winehq.key \
-    && apt-key add winehq.key \
+    && apt-get install --no-install-recommends -qfy apt-transport-https software-properties-common \
+        wget \
+        file gpg-agent rename \
+    && wget -qO - https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
     && add-apt-repository 'https://dl.winehq.org/wine-builds/ubuntu/' \
     && apt-get update -qy \
     && apt-get install --no-install-recommends -qfy $WINE_VERSION winbind cabextract \
